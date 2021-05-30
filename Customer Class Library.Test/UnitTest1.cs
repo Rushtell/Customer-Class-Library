@@ -14,18 +14,18 @@ namespace Customer_Class_Library.Test
             testAdress.AddressLine = "st.Pupkina";
             testAdress.SecondAddressLine = "house Vaniutkina";
             testAdress.AddressType = AddressType.Billing;
-            testAdress.City = "Воронеж";
+            testAdress.City = "Г‚Г®Г°Г®Г­ГҐГ¦";
             testAdress.PostalCode = "1458";
             testAdress.State = "Texas";
-            testAdress.Country = "Россия";
+            testAdress.Country = "ГђГ®Г±Г±ГЁГї";
 
             Assert.Equal(testAdress.AddressLine, "st.Pupkina");
             Assert.Equal(testAdress.SecondAddressLine, "house Vaniutkina");
             Assert.Equal(testAdress.AddressType, AddressType.Billing);
-            Assert.Equal(testAdress.City, "Воронеж");
+            Assert.Equal(testAdress.City, "Г‚Г®Г°Г®Г­ГҐГ¦");
             Assert.Equal(testAdress.PostalCode, "1458");
             Assert.Equal(testAdress.State, "Texas");
-            Assert.Equal(testAdress.Country, "Россия");
+            Assert.Equal(testAdress.Country, "ГђГ®Г±Г±ГЁГї");
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Customer_Class_Library.Test
             ValidationResult result = validator.Validate(customer);
             Console.WriteLine(result.ToString("\n"));
 
-            Assert.Equal("Указанное условие не было выполнено для 'Country'.", result.ToString());
+            Assert.Equal("The specified condition was not met for 'Country'.", result.ToString());
         }
     }
 }
