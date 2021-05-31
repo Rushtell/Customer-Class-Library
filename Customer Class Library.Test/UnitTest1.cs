@@ -1,3 +1,4 @@
+using FluentValidation;
 using FluentValidation.Results;
 using System;
 using Xunit;
@@ -31,6 +32,8 @@ namespace Customer_Class_Library.Test
         [Fact]
         public void ValidatorsTestShouldBeEmptyString()
         {
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
             Address address = new Address()
             {
                 AddressLine = "st. Pushkina",
@@ -63,6 +66,7 @@ namespace Customer_Class_Library.Test
         [Fact]
         public void ValidatorsTestShouldBeErrorCountry()
         {
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
             Address address = new Address()
             {
                 AddressLine = "st. Pushkina",
