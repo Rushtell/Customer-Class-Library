@@ -17,4 +17,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-report
-          path: ./Calculator.Test/TestResults/**/coverage.cobertura.xml
+          path: ./Customer Class Library.Test/TestResults/**/coverage.cobertura.xml
