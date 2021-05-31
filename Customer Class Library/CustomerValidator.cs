@@ -10,31 +10,77 @@ namespace Customer_Class_Library
 {
     public class CustomerValidator : AbstractValidator<Customer>
     {
-        public CustomerValidator()
+        public List<string> ErrorsList { get; set; }
+
+        public CustomerValidator(Customer customer)
         {
-            RuleFor(customer => customer.FirstName).Length(3,50);
+            ErrorsList = new List<string>();
+            CheckFirstName(customer);
+            CheckLastName(customer);
+            CheckAddress(customer);
+            CheckPhone(customer);
+            CheckEmail(customer);
+            CheckNote(customer);
+        }
 
-            RuleFor(customer => customer.LastName).Length(3,50);
-
-            RuleFor(customer => customer.Address).SetValidator(new AddressValidator());
-
-            RuleFor(customer => customer.PhoneNumber).MaximumLength(15).NotEmpty().Must(IsPhoneValid);
-
-            //string pattern = @"[0-9a-z]*\@[0-9a-z]*\.[a-z]*";
-            //Regex.IsMatch(customer.Address, pattern, RegexOptions.IgnoreCase);
-
-            RuleFor(customer => customer.Email).EmailAddress().NotEmpty();
-
-            RuleFor(customer => customer.Note).NotEmpty();
-
-            RuleFor(customer => customer.Money).NotEmpty();
-
-            bool IsPhoneValid(string phone)
+        void CheckFirstName(Customer customer)
+        {
+            if (customer.FirstName == null)
             {
-                if (phone == null) return false;
-                return !(!phone.StartsWith("+") || !phone.Substring(1).All(c => Char.IsDigit(c)));
+                ErrorsList.Add("FirstName incorrect");
+                return;
             }
+            if (customer.FirstName.Length < 3 || customer.FirstName.Length > 50) ErrorsList.Add("FirstName incorrect");
+        }
 
+        void CheckLastName(Customer customer)
+        {
+            if (customer.LastName == null)
+            {
+                ErrorsList.Add("LastName incorrect");
+                return;
+            }
+            if (customer.LastName.Length < 3 || customer.LastName.Length > 50) ErrorsList.Add("LastName incorrect");
+        }
+
+        void CheckAddress(Customer customer)
+        {
+            if (customer.Address == null)
+            {
+                ErrorsList.Add("Address incorrect");
+                return;
+            }
+            AddressValidator addressValidator = new AddressValidator(customer.Address);
+            foreach (var item in addressValidator.ErrorsList)
+            {
+                ErrorsList.Add(item);
+            }
+        }
+
+        void CheckPhone(Customer customer)
+        {
+            if (customer.PhoneNumber == null)
+            {
+                ErrorsList.Add("Phone number incorrect");
+                return;
+            }
+            if (!customer.PhoneNumber.StartsWith("+") || !customer.PhoneNumber.Substring(1).All(c => Char.IsDigit(c))) ErrorsList.Add("Phone number incorrect");
+        }
+
+        void CheckEmail(Customer customer)
+        {
+            if (customer.Email == null)
+            {
+                ErrorsList.Add("Email incorrect");
+                return;
+            }
+            string pattern = @"[0-9a-z]*\@[0-9a-z]*\.[a-z]*";
+            if (!Regex.IsMatch(customer.Email, pattern, RegexOptions.IgnoreCase)) ErrorsList.Add("Email incorrect");
+        }
+
+        void CheckNote(Customer customer)
+        {
+            if (customer.Note == null) ErrorsList.Add("Note incorrect");
         }
     }
 }

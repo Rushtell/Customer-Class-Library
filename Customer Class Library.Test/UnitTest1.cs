@@ -7,33 +7,9 @@ namespace Customer_Class_Library.Test
 {
     public class UnitTest1
     {
-        
-        [Fact]
-        public void AdressClassTest()
-        {
-            Address testAdress = new Address();
-            testAdress.AddressLine = "st.Pupkina";
-            testAdress.SecondAddressLine = "house Vaniutkina";
-            testAdress.AddressType = AddressType.Billing;
-            testAdress.City = "Âîðîíåæ";
-            testAdress.PostalCode = "1458";
-            testAdress.State = "Texas";
-            testAdress.Country = "Ðîññèÿ";
-
-            Assert.Equal(testAdress.AddressLine, "st.Pupkina");
-            Assert.Equal(testAdress.SecondAddressLine, "house Vaniutkina");
-            Assert.Equal(testAdress.AddressType, AddressType.Billing);
-            Assert.Equal(testAdress.City, "Âîðîíåæ");
-            Assert.Equal(testAdress.PostalCode, "1458");
-            Assert.Equal(testAdress.State, "Texas");
-            Assert.Equal(testAdress.Country, "Ðîññèÿ");
-        }
-
         [Fact]
         public void ValidatorsTestShouldBeEmptyString()
         {
-            ValidatorOptions.Global.LanguageManager.Enabled = false;
-
             Address address = new Address()
             {
                 AddressLine = "st. Pushkina",
@@ -45,7 +21,6 @@ namespace Customer_Class_Library.Test
                 Country = "United States"
             };
 
-            CustomerValidator validator = new CustomerValidator();
             Customer customer = new Customer()
             {
                 FirstName = "Vladislav",
@@ -57,43 +32,91 @@ namespace Customer_Class_Library.Test
                 Money = 322
             };
 
-            ValidationResult result = validator.Validate(customer);
-            Console.WriteLine(result.ToString("\n"));
+            CustomerValidator validator = new CustomerValidator(customer);
 
-            Assert.Equal("", result.ToString());
+            string result = "";
+            foreach (var item in validator.ErrorsList)
+            {
+                result += item;
+            }
+
+            Assert.Equal("", result);
         }
 
         [Fact]
-        public void ValidatorsTestShouldBeErrorCountry()
+        public void ValidatorsTestShouldBeAllErrorsWithoutAddress()
         {
-            ValidatorOptions.Global.LanguageManager.Enabled = false;
             Address address = new Address()
             {
-                AddressLine = "st. Pushkina",
-                SecondAddressLine = "house Kolotushkina",
+                AddressLine = "st. Pushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                SecondAddressLine = "house Kolotushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 AddressType = AddressType.Shipping,
-                City = "Vakanda",
-                PostalCode = "244433",
-                State = "Texas",
-                Country = "Russia"
+                City = "Vakandaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                PostalCode = "244433234343",
+                State = "Texassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+                Country = "United"
             };
 
-            CustomerValidator validator = new CustomerValidator();
             Customer customer = new Customer()
             {
-                FirstName = "Vladislav",
-                LastName = "Maslov",
+                FirstName = "V",
+                LastName = "M",
                 Address = address,
-                PhoneNumber = "+322223",
-                Email = "123@ewok.com",
-                Note = "Hello, World!",
+                PhoneNumber = "3",
+                Email = "123ewok.com",
                 Money = 322
             };
 
-            ValidationResult result = validator.Validate(customer);
-            Console.WriteLine(result.ToString("\n"));
+            CustomerValidator validator = new CustomerValidator(customer);
 
-            Assert.Equal("The specified condition was not met for 'Country'.", result.ToString());
+            string result = "";
+            foreach (var item in validator.ErrorsList)
+            {
+                result += $"\n{item}";
+            }
+
+            Assert.Equal("\nFirstName incorrect\nLastName incorrect\nAddressLine incorrect" +
+                "\nSecondAddressLine incorrect\nCity incorrect\nPostalCode incorrect\nState incorrect\nCountry incorrect" +
+                "\nPhone number incorrect\nEmail incorrect\nNote incorrect", result);
+        }
+
+        [Fact]
+        public void ValidatorsTestShouldBeAllErrors()
+        {
+            Address address = new Address();
+
+            Customer customer = new Customer() { Address = address};
+
+            CustomerValidator validator = new CustomerValidator(customer);
+
+            string result = "";
+            foreach (var item in validator.ErrorsList)
+            {
+                result += $"\n{item}";
+            }
+
+            Assert.Equal("\nFirstName incorrect\nLastName incorrect\nAddressLine incorrect" +
+                "\nSecondAddressLine incorrect\nCity incorrect\nPostalCode incorrect\nState incorrect\nCountry incorrect" +
+                "\nPhone number incorrect\nEmail incorrect\nNote incorrect", result);
+        }
+
+        [Fact]
+        public void ValidatorsTestShouldBeErrorsWithoutAdress()
+        {
+            Address address = new Address();
+
+            Customer customer = new Customer();
+
+            CustomerValidator validator = new CustomerValidator(customer);
+
+            string result = "";
+            foreach (var item in validator.ErrorsList)
+            {
+                result += $"\n{item}";
+            }
+
+            Assert.Equal("\nFirstName incorrect\nLastName incorrect\nAddress incorrect" +
+                "\nPhone number incorrect\nEmail incorrect\nNote incorrect", result);
         }
     }
 }
