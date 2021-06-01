@@ -12,12 +12,12 @@ namespace Customer_Class_Library
         public AddressValidator()
         {
             RuleFor(address => address.AddressLine).MaximumLength(100).NotNull();
-            RuleFor(address => address.SecondAddressLine).MaximumLength(100);
+            RuleFor(address => address.SecondAddressLine).MaximumLength(100).NotNull();
             RuleFor(address => address.AddressType).IsInEnum();
-            RuleFor(address => address.City).MaximumLength(50);
-            RuleFor(address => address.PostalCode).MaximumLength(6);
-            RuleFor(address => address.State).MaximumLength(20);
-            RuleFor(address => address.Country).Must(IsCountryValid).NotEmpty();
+            RuleFor(address => address.City).MaximumLength(50).NotNull();
+            RuleFor(address => address.PostalCode).MaximumLength(6).NotNull();
+            RuleFor(address => address.State).MaximumLength(20).NotNull();
+            RuleFor(address => address.Country).Must(IsCountryValid).NotNull();
 
             bool IsCountryValid (string country)
             {

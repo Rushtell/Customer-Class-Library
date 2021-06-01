@@ -45,7 +45,6 @@ namespace Customer_Class_Library.Test
                 Country = "United States"
             };
 
-            CustomerValidator validator = new CustomerValidator();
             Customer customer = new Customer()
             {
                 FirstName = "Vladislav",
@@ -57,43 +56,53 @@ namespace Customer_Class_Library.Test
                 Money = 322
             };
 
+            CustomerValidator validator = new CustomerValidator();
             ValidationResult result = validator.Validate(customer);
-            Console.WriteLine(result.ToString("\n"));
 
             Assert.Equal("", result.ToString());
         }
 
         [Fact]
-        public void ValidatorsTestShouldBeErrorCountry()
+        public void ValidatorsTestShouldBeAllErrorsWithoutAddress()
         {
-            ValidatorOptions.Global.LanguageManager.Enabled = false;
             Address address = new Address()
             {
-                AddressLine = "st. Pushkina",
-                SecondAddressLine = "house Kolotushkina",
+                AddressLine = "st. Pushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                SecondAddressLine = "house Kolotushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 AddressType = AddressType.Shipping,
-                City = "Vakanda",
-                PostalCode = "244433",
-                State = "Texas",
-                Country = "Russia"
+                City = "Vakandaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                PostalCode = "244433234343",
+                State = "Texassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+                Country = "United"
             };
 
-            CustomerValidator validator = new CustomerValidator();
             Customer customer = new Customer()
             {
-                FirstName = "Vladislav",
-                LastName = "Maslov",
+                FirstName = "V",
+                LastName = "M",
                 Address = address,
-                PhoneNumber = "+322223",
-                Email = "123@ewok.com",
-                Note = "Hello, World!",
+                PhoneNumber = "3",
+                Email = "123ewok.com",
                 Money = 322
             };
 
+            CustomerValidator validator = new CustomerValidator();
             ValidationResult result = validator.Validate(customer);
-            Console.WriteLine(result.ToString("\n"));
 
-            Assert.Equal("The specified condition was not met for 'Country'.", result.ToString());
+            Assert.Equal(12, result.Errors.Count);
+        }
+
+        [Fact]
+        public void ValidatorsTestShouldBeAllNullErrors()
+        {
+            Address address = new Address();
+
+            Customer customer = new Customer();
+
+            CustomerValidator validator = new CustomerValidator();
+            ValidationResult result = validator.Validate(customer);
+
+            Assert.Equal(8, result.Errors.Count);
         }
     }
 }
