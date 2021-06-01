@@ -12,22 +12,19 @@ namespace Customer_Class_Library
     {
         public CustomerValidator()
         {
-            RuleFor(customer => customer.FirstName).Length(3,50);
+            RuleFor(customer => customer.FirstName).Length(3,50).NotNull();
 
-            RuleFor(customer => customer.LastName).Length(3,50);
+            RuleFor(customer => customer.LastName).Length(3,50).NotNull();
 
-            RuleFor(customer => customer.Address).SetValidator(new AddressValidator());
+            RuleFor(customer => customer.Address).SetValidator(new AddressValidator()).NotNull();
 
-            RuleFor(customer => customer.PhoneNumber).MaximumLength(15).NotEmpty().Must(IsPhoneValid);
+            RuleFor(customer => customer.PhoneNumber).MaximumLength(15).NotNull().Must(IsPhoneValid);
 
-            //string pattern = @"[0-9a-z]*\@[0-9a-z]*\.[a-z]*";
-            //Regex.IsMatch(customer.Address, pattern, RegexOptions.IgnoreCase);
+            RuleFor(customer => customer.Email).EmailAddress().NotNull();
 
-            RuleFor(customer => customer.Email).EmailAddress().NotEmpty();
+            RuleFor(customer => customer.Note).NotEmpty().NotNull();
 
-            RuleFor(customer => customer.Note).NotEmpty();
-
-            RuleFor(customer => customer.Money).NotEmpty();
+            RuleFor(customer => customer.Money).NotNull();
 
             bool IsPhoneValid(string phone)
             {
