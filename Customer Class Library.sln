@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer Class Library", "Customer Class Library\Customer Class Library.csproj", "{5151AFED-238A-4A4C-9A55-056541F7B51D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer Class Library.Test", "Customer Class Library.Test\Customer Class Library.Test.csproj", "{A3F1D8D6-C8BC-46A7-A5A6-F2E6CA84424E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer Class Library.Test", "Customer Class Library.Test\Customer Class Library.Test.csproj", "{A3F1D8D6-C8BC-46A7-A5A6-F2E6CA84424E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{062268AE-F420-4F9D-9495-A3CD6545E8F4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\tests.yml = .github\workflows\tests.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
