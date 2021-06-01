@@ -35,10 +35,6 @@ namespace Customer_Class_Library.Test
             CustomerValidator validator = new CustomerValidator(customer);
 
             string result = "";
-            foreach (var item in validator.ErrorsList)
-            {
-                result += item;
-            }
 
             Assert.Equal("", result);
         }
