@@ -14,6 +14,10 @@ namespace Customer_Class_Library
 
     public class Address
     {
+        public int AddressId { get; set; }
+
+        public int CustomerId { get; set; }
+
         public string AddressLine { get; set; }
 
         public string SecondAddressLine { get; set; }

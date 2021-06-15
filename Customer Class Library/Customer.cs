@@ -9,13 +9,15 @@ namespace Customer_Class_Library
 {
     public class Customer : Person
     {
+        public int CustomerId { get; set; }
+
         public Address Address { get; set; }
 
         public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
 
-        public string Note { get; set; }
+        public List<string> Note { get; set; }
 
         public decimal Money { get; set; }
     }

@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Customer_Class_Library.Test
@@ -20,13 +21,13 @@ namespace Customer_Class_Library.Test
             testAdress.State = "Texas";
             testAdress.Country = "Ðîññèÿ";
 
-            Assert.Equal(testAdress.AddressLine, "st.Pupkina");
-            Assert.Equal(testAdress.SecondAddressLine, "house Vaniutkina");
-            Assert.Equal(testAdress.AddressType, AddressType.Billing);
-            Assert.Equal(testAdress.City, "Âîðîíåæ");
-            Assert.Equal(testAdress.PostalCode, "1458");
-            Assert.Equal(testAdress.State, "Texas");
-            Assert.Equal(testAdress.Country, "Ðîññèÿ");
+            Assert.Equal("st.Pupkina", testAdress.AddressLine);
+            Assert.Equal("house Vaniutkina", testAdress.SecondAddressLine);
+            Assert.Equal(AddressType.Billing, testAdress.AddressType);
+            Assert.Equal("Âîðîíåæ", testAdress.City);
+            Assert.Equal("1458", testAdress.PostalCode);
+            Assert.Equal("Texas", testAdress.State);
+            Assert.Equal("Ðîññèÿ", testAdress.Country);
         }
 
         [Fact]
@@ -52,7 +53,7 @@ namespace Customer_Class_Library.Test
                 Address = address,
                 PhoneNumber = "+322223",
                 Email = "123@ewok.com",
-                Note = "Hello, World!",
+                Note = new List<string>() { "Hello", "World!" },
                 Money = 322
             };
 
