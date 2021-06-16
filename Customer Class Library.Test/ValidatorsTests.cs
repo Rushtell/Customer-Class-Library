@@ -6,30 +6,8 @@ using Xunit;
 
 namespace Customer_Class_Library.Test
 {
-    public class UnitTest1
+    public class ValidatorsTests
     {
-        
-        [Fact]
-        public void AdressClassTest()
-        {
-            Address testAdress = new Address();
-            testAdress.AddressLine = "st.Pupkina";
-            testAdress.SecondAddressLine = "house Vaniutkina";
-            testAdress.AddressType = AddressType.Billing;
-            testAdress.City = "Âîðîíåæ";
-            testAdress.PostalCode = "1458";
-            testAdress.State = "Texas";
-            testAdress.Country = "Ðîññèÿ";
-
-            Assert.Equal("st.Pupkina", testAdress.AddressLine);
-            Assert.Equal("house Vaniutkina", testAdress.SecondAddressLine);
-            Assert.Equal(AddressType.Billing, testAdress.AddressType);
-            Assert.Equal("Âîðîíåæ", testAdress.City);
-            Assert.Equal("1458", testAdress.PostalCode);
-            Assert.Equal("Texas", testAdress.State);
-            Assert.Equal("Ðîññèÿ", testAdress.Country);
-        }
-
         [Fact]
         public void ValidatorsTestShouldBeEmptyString()
         {
@@ -50,7 +28,7 @@ namespace Customer_Class_Library.Test
             {
                 FirstName = "Vladislav",
                 LastName = "Maslov",
-                Address = address,
+                Address = new List<Address>() { address },
                 PhoneNumber = "+322223",
                 Email = "123@ewok.com",
                 Note = new List<string>() { "Hello", "World!" },
@@ -81,7 +59,7 @@ namespace Customer_Class_Library.Test
             {
                 FirstName = "V",
                 LastName = "M",
-                Address = address,
+                Address = new List<Address>() { address },
                 PhoneNumber = "3",
                 Email = "123ewok.com",
                 Money = 322
@@ -103,7 +81,7 @@ namespace Customer_Class_Library.Test
             CustomerValidator validator = new CustomerValidator();
             ValidationResult result = validator.Validate(customer);
 
-            Assert.Equal(8, result.Errors.Count);
+            Assert.Equal(7, result.Errors.Count);
         }
     }
 }

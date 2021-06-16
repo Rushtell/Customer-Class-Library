@@ -31,6 +31,13 @@ namespace Customer_Class_Library.Data.Test
         }
 
         [Fact]
+        public void ReadCustomerAddresses()
+        {
+            var addressesRepository = new AddressesRepository();
+            addressesRepository.ReadCustomerAddresses(2);
+        }
+
+        [Fact]
         public void TestUpdate()
         {
             var addressesRepository = new AddressesRepository();

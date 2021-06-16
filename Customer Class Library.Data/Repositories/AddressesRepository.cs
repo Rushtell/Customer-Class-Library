@@ -116,6 +116,50 @@ namespace Customer_Class_Library.Data
             }
         }
 
+        public List<Address> ReadCustomerAddresses(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "SELECT * FROM [Addresses]" +
+                    "WHERE CustomerId = @CustomerId", connection);
+
+                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                {
+                    Value = id
+                };
+
+                command.Parameters.Add(customerIdParam);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    List<Address> addresses = new List<Address>();
+                    while (reader.Read())
+                    {
+                        AddressType type;
+                        if (reader["AddressType"]?.ToString() == "Billing") type = AddressType.Billing;
+                        else if (reader["AddressType"]?.ToString() == "Shipping") type = AddressType.Shipping;
+                        else throw new TypeAccessException("Invalid Type");
+                        addresses.Add(new Address()
+                        {
+                            AddressId = (int)reader["AddressId"],
+                            CustomerId = (int)reader["CustomerId"],
+                            AddressLine = reader["AddressLine"]?.ToString(),
+                            SecondAddressLine = reader["AddressLine2"]?.ToString(),
+                            AddressType = type,
+                            City = reader["City"]?.ToString(),
+                            PostalCode = reader["PostalCode"]?.ToString(),
+                            State = reader["State"]?.ToString(),
+                            Country = reader["Country"]?.ToString(),
+                        });
+                    }
+                    return addresses;
+                }
+            }
+        }
+
         public void Update(Address address)
         {
             using (var connection = GetConnection())

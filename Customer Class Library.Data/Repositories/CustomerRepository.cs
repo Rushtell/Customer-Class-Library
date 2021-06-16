@@ -74,6 +74,7 @@ namespace Customer_Class_Library.Data
                     {
                         return new Customer()
                         {
+                            CustomerId = (int)reader["CustomerId"],
                             FirstName = reader["FirstName"]?.ToString(),
                             LastName = reader["LastName"]?.ToString(),
                             PhoneNumber = reader["PhoneNumber"]?.ToString(),

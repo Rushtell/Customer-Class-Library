@@ -11,7 +11,7 @@ namespace Customer_Class_Library
     {
         public int CustomerId { get; set; }
 
-        public Address Address { get; set; }
+        public List<Address> Address { get; set; }
 
         public string PhoneNumber { get; set; }
 

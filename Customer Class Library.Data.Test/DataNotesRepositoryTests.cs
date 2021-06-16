@@ -25,6 +25,13 @@ namespace Customer_Class_Library.Data.Test
         }
 
         [Fact]
+        public void ReadCustomerNotes()
+        {
+            var notesRepository = new NotesRepository();
+            notesRepository.ReadCustomerNotes(2);
+        }
+
+        [Fact]
         public void TestUpdate()
         {
             var notesRepository = new NotesRepository();

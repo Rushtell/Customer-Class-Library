@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Customer_Class_Library.DataAssembler</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Customer Class Library.Data\Customer Class Library.Data.csproj" />
+    <ProjectReference Include="..\Customer Class Library\Customer Class Library.csproj" />
+  </ItemGroup>
+
+</Project>

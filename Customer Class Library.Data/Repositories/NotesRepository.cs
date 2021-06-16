@@ -69,6 +69,35 @@ namespace Customer_Class_Library.Data
             }
         }
 
+        public List<string> ReadCustomerNotes(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "SELECT * FROM [Notes]" +
+                    "WHERE CustomerId = @CustomerId", connection);
+
+                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                {
+                    Value = id
+                };
+
+                command.Parameters.Add(customerIdParam);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    List<string> notes = new List<string>();
+                    while (reader.Read())
+                    {
+                        notes.Add(reader["Note"]?.ToString());
+                    }
+                    return notes;
+                }
+            }
+        }
+
         public void Update(int idNote, string note, int idCustomer)
         {
             using (var connection = GetConnection())

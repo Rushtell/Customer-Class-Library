@@ -16,7 +16,7 @@ namespace Customer_Class_Library
 
             RuleFor(customer => customer.LastName).Length(3,50).NotNull();
 
-            RuleFor(customer => customer.Address).SetValidator(new AddressValidator()).NotNull();
+            RuleForEach(customer => customer.Address).SetValidator(new AddressValidator()).NotNull();
 
             RuleFor(customer => customer.PhoneNumber).MaximumLength(15).NotNull().Must(IsPhoneValid);
 
