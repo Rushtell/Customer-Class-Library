@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Customer_Class_Library.Data.Test</RootNamespace>
+    <RootNamespace>CustomerClassLibrary.DataAssembler.Test</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Customer Class Library.DataAssembler\Customer Class Library.DataAssembler.csproj" />
-    <ProjectReference Include="..\..\src\Customer Class Library.Data\Customer Class Library.Data.csproj" />
-    <ProjectReference Include="..\..\src\Customer Class Library\Customer Class Library.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary.DataAssembler\CustomerClassLibrary.DataAssembler.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary.Data\CustomerClassLibrary.Data.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary\CustomerClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

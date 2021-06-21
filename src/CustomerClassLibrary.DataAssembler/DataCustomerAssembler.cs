@@ -1,7 +1,7 @@
-﻿using Customer_Class_Library.Data;
+﻿using CustomerClassLibrary.Data;
 using System;
 
-namespace Customer_Class_Library.DataAssembler
+namespace CustomerClassLibrary.DataAssembler
 {
     public class DataCustomerAssembler
     {

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Customer_Class_Library.Test</RootNamespace>
+    <RootNamespace>CustomerClassLibrary.Test</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Customer Class Library\Customer Class Library.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary\CustomerClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

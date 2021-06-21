@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Customer_Class_Library.Data
+namespace CustomerClassLibrary.Data
 {
     public abstract class BaseRepository
     {

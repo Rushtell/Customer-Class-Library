@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Customer_Class_Library.Data.Test
+namespace CustomerClassLibrary.Data.Test
 {
     public class DataNotesRepositoryTests
     {

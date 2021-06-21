@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Customer_Class_Library
+namespace CustomerClassLibrary
 {
     public abstract class Person
     {

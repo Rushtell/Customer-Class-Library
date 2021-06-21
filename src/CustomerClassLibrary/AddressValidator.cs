@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Customer_Class_Library
+namespace CustomerClassLibrary
 {
     public class AddressValidator : AbstractValidator<Address>
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Customer_Class_Library
+namespace CustomerClassLibrary
 {
     public class Customer : Person
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Customer_Class_Library.Test
+namespace CustomerClassLibrary.Test
 {
     public class ValidatorsTests
     {

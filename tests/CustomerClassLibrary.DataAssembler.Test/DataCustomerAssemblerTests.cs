@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Customer_Class_Library.DataAssembler.Test
+namespace CustomerClassLibrary.DataAssembler.Test
 {
     public class DataCustomerAssemblerTests
     {
@@ -9,7 +9,9 @@ namespace Customer_Class_Library.DataAssembler.Test
         public void BuildTest()
         {
             var customerAssembler = new DataCustomerAssembler();
-            var customer = customerAssembler.BuildCustomer(4);
+            var customer = customerAssembler.BuildCustomer(2);
+
+            Assert.Equal("st Pushkina", customer.Address[0].AddressLine);
         }
     }
 }

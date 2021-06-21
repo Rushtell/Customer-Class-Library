@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Customer_Class_Library
+namespace CustomerClassLibrary
 {
     public class CustomerValidator : AbstractValidator<Customer>
     {

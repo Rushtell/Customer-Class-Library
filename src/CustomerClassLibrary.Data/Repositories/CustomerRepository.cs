@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Customer_Class_Library.Data
+namespace CustomerClassLibrary.Data
 {
     public class CustomerRepository : BaseRepository
     {

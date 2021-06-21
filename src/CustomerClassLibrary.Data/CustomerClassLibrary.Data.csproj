@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Customer_Class_Library.Data</RootNamespace>
+    <RootNamespace>CustomerClassLibrary.Data</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Customer Class Library\Customer Class Library.csproj" />
+    <ProjectReference Include="..\CustomerClassLibrary\CustomerClassLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
