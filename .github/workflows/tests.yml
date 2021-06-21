@@ -4,22 +4,28 @@ on:
     branches:
       - ADO.NET
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.1
+  build:
 
-      - name: Tests
-        run: |
-          dotnet test ./tests/CustomerLibrary.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*CustomerLibrary.Data]*" /p:CoverletOutput=TestResults/
-      - name: Upload test report
-      - uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: ./tests/CustomerLibrary.Tests/TestResults/coverage.opencover.xml
-          flags: unittests 
-          name: codecov-umbrella
-          fail_ci_if_error: true 
-          verbose: true
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.x.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test ./tests/CustomerLibrary.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*CustomerLibrary.Data]*" /p:CoverletOutput=TestResults/
+    - uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        files: ./tests/CustomerLibrary.Tests/TestResults/coverage.opencover.xml
+        flags: unittests 
+        name: codecov-umbrella
+        fail_ci_if_error: true 
+        verbose: true
             
