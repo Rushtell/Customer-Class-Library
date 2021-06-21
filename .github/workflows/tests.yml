@@ -19,7 +19,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test ./tests/CustomerClassLibrary.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[*CustomerClassLibrary.Data]*" /p:CoverletOutput=TestResults/
+      run: dotnet test ./tests/CustomerClassLibrary.Tests /p:Exclude="[*CustomerClassLibrary.Data]*" /p:ExcludeByFile=**/CustomerClassLibrary.Test/*.cs
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
