@@ -168,7 +168,8 @@ namespace CustomerClassLibrary.Data
 
                 var command = new SqlCommand(
                     "UPDATE [Addresses] " +
-                    "SET CustomerId = @CustomerId, AddressLine = @AddressLine, AddressLine2 = @AddressLine2, AddressType = @AddressType, City = @City, PostalCode = @PostalCode, State = @State, Country = @Country", connection);
+                    "SET CustomerId = @CustomerId, AddressLine = @AddressLine, AddressLine2 = @AddressLine2, AddressType = @AddressType, City = @City, PostalCode = @PostalCode, State = @State, Country = @Country " +
+                    "WHERE AddressId = @AddressId", connection);
                 
                 var addressIdParam = new SqlParameter("@AddressId", SqlDbType.Int)
                 {
@@ -245,6 +246,27 @@ namespace CustomerClassLibrary.Data
                 };
 
                 command.Parameters.Add(addressIdParam);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteAllByCustomerId(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "DELETE FROM [Addresses]" +
+                    "WHERE CustomerId = @CustomerId", connection);
+
+                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                {
+                    Value = id
+                };
+
+                command.Parameters.Add(customerIdParam);
 
                 command.ExecuteNonQuery();
             }

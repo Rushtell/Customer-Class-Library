@@ -152,5 +152,26 @@ namespace CustomerClassLibrary.Data
                 command.ExecuteNonQuery();
             }
         }
+
+        public void DeleteAllByCustomerId(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "DELETE FROM [Notes]" +
+                    "WHERE CustomerId = @CustomerId", connection);
+
+                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                {
+                    Value = id
+                };
+
+                command.Parameters.Add(customerIdParam);
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -83,6 +84,35 @@ namespace CustomerClassLibrary.Data
                         };
                     }
                     return null;
+                }
+            }
+        }
+
+        public List<Customer> ReadAll()
+        {
+            List<Customer> listCustomers = new List<Customer>();
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "SELECT * FROM [Customers]", connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listCustomers.Add(new Customer()
+                        {
+                            CustomerId = (int)reader["CustomerId"],
+                            FirstName = reader["FirstName"]?.ToString(),
+                            LastName = reader["LastName"]?.ToString(),
+                            PhoneNumber = reader["PhoneNumber"]?.ToString(),
+                            Email = reader["Email"]?.ToString(),
+                            Money = (decimal)reader["TotalPurchasesAmount"]
+                        });
+                    }
+                    return listCustomers;
                 }
             }
         }
