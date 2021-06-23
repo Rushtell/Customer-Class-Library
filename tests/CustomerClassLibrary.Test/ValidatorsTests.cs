@@ -31,7 +31,7 @@ namespace CustomerClassLibrary.Test
                 Address = new List<Address>() { address },
                 PhoneNumber = "+322223",
                 Email = "123@ewok.com",
-                Note = new List<string>() { "Hello", "World!" },
+                Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello" }, new Note() { CustomerId = 2, Text = "World" } },
                 Money = 322
             };
 

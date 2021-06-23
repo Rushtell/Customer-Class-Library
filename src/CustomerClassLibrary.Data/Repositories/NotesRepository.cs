@@ -10,38 +10,36 @@ namespace CustomerClassLibrary.Data
 {
     public class NotesRepository : BaseRepository
     {
-        public void Create(List<string> notes, int id)
+        public int Create(Note note)
         {
-            foreach (var note in notes)
+            using (var connection = GetConnection())
             {
-                using (var connection = GetConnection())
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "INSERT INTO [Notes] (CustomerId, Note) " +
+                    "VALUES( @CustomerId, @Note); " +
+                    "SELECT CAST(scope_identity() AS int)", connection);
+
+
+                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
                 {
-                    connection.Open();
+                    Value = note.CustomerId
+                };
 
-                    var command = new SqlCommand(
-                        "INSERT INTO [Notes] (CustomerId, Note) " +
-                        "VALUES( @CustomerId, @Note)", connection);
+                var noteParam = new SqlParameter("@Note", SqlDbType.Text)
+                {
+                    Value = note.Text
+                };
 
+                command.Parameters.Add(customerIdParam);
+                command.Parameters.Add(noteParam);
 
-                    var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
-                    {
-                        Value = id
-                    };
-
-                    var noteParam = new SqlParameter("@Note", SqlDbType.Text)
-                    {
-                        Value = note
-                    };
-
-                    command.Parameters.Add(customerIdParam);
-                    command.Parameters.Add(noteParam);
-
-                    command.ExecuteNonQuery();
-                }
+                return (int)command.ExecuteScalar();
             }
         }
 
-        public string Read(int id)
+        public Note Read(int id)
         {
             using (var connection = GetConnection())
             {
@@ -62,14 +60,19 @@ namespace CustomerClassLibrary.Data
                 {
                     if (reader.Read())
                     {
-                        return reader["Note"]?.ToString();
+                        return new Note()
+                        {
+                            NoteId = id,
+                            CustomerId = Convert.ToInt32(reader["CustomerId"]?.ToString()),
+                            Text = reader["Note"]?.ToString()
+                        };
                     }
                     return null;
                 }
             }
         }
 
-        public List<string> ReadCustomerNotes(int id)
+        public List<Note> ReadCustomerNotes(int id)
         {
             using (var connection = GetConnection())
             {
@@ -88,10 +91,15 @@ namespace CustomerClassLibrary.Data
 
                 using (var reader = command.ExecuteReader())
                 {
-                    List<string> notes = new List<string>();
+                    List<Note> notes = new List<Note>();
                     while (reader.Read())
                     {
-                        notes.Add(reader["Note"]?.ToString());
+                        notes.Add(new Note()
+                        {
+                            NoteId = Convert.ToInt32(reader["NoteId"]?.ToString()),
+                            CustomerId = Convert.ToInt32(reader["CustomerId"]?.ToString()),
+                            Text = reader["Note"]?.ToString()
+                        });
                     }
                     return notes;
                 }

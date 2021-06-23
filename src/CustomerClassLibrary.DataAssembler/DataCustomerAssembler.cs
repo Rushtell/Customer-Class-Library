@@ -20,10 +20,28 @@ namespace CustomerClassLibrary.DataAssembler
             return customer;
         }
 
-        public void CreateCustomer(Customer customer)
+        public Customer CreateCustomer(Customer customer)
         {
             var customerRepository = new CustomerRepository();
-            customerRepository.Create(customer);
+            var customerId = customerRepository.Create(customer);
+            customer.CustomerId = customerId;
+            var addressesRepository = new AddressesRepository();
+
+            foreach (var a in customer.Address)
+            {
+                a.CustomerId = customer.CustomerId;
+                a.AddressId = addressesRepository.Create(a);
+            }
+
+            var notesRepository = new NotesRepository();
+
+            foreach (var n in customer.Note)
+            {
+                n.CustomerId = customer.CustomerId;
+                n.NoteId = notesRepository.Create(n);
+            }
+
+            return customer;
         }
 
         public void DeleteCustomer(int id)

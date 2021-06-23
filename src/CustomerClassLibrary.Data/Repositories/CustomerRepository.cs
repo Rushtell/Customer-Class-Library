@@ -7,7 +7,7 @@ namespace CustomerClassLibrary.Data
 {
     public class CustomerRepository : BaseRepository
     {
-        public void Create(Customer customer)
+        public int Create(Customer customer)
         {
             using (var connection = GetConnection())
             {
@@ -15,7 +15,8 @@ namespace CustomerClassLibrary.Data
 
                 var command = new SqlCommand(
                     "INSERT INTO [Customers] (FirstName, LastName, PhoneNumber, Email, TotalPurchasesAmount) " +
-                    "VALUES( @FirstName, @LastName, @PhoneNumber, @Email, @TotalPurchasesAmount)", connection);
+                    "VALUES( @FirstName, @LastName, @PhoneNumber, @Email, @TotalPurchasesAmount); " +
+                    "SELECT CAST(scope_identity() AS int)", connection);
 
                 var firstNameParam = new SqlParameter("@FirstName", SqlDbType.NVarChar, 50)
                 {
@@ -48,7 +49,7 @@ namespace CustomerClassLibrary.Data
                 command.Parameters.Add(emailParam);
                 command.Parameters.Add(totalPurchasesAmountParam);
 
-                command.ExecuteNonQuery();
+                return (int)(command.ExecuteScalar());
             }
         }
 

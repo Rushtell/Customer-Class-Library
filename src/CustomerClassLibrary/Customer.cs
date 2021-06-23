@@ -16,7 +16,7 @@ namespace CustomerClassLibrary
 
         public string Email { get; set; }
 
-        public List<string> Note { get; set; }
+        public List<Note> Note { get; set; }
 
         public decimal Money { get; set; }
     }

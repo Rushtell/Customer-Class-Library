@@ -17,7 +17,7 @@ namespace CustomerClassLibrary.Data.Test
                 Address = new List<Address>() { new Address() { AddressLine = "st Pushkina", SecondAddressLine = "house Kolotushkina", AddressType = AddressType.Billing, City = "Chelybinsk", Country = "United States", PostalCode = "123456", State = "Texas" } },
                 Email = "qwer@gmail.com",
                 PhoneNumber = "+7123456789",
-                Note = new List<string>() { "Hello", "World" },
+                Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello"}, new Note() { CustomerId = 2, Text = "World" } },
                 Money = (decimal)100.51
             });
         }
@@ -41,7 +41,7 @@ namespace CustomerClassLibrary.Data.Test
                 Address = new List<Address>() { new Address() { AddressLine = "st Pushkina", SecondAddressLine = "house Kolotushkina", AddressType = AddressType.Billing, City = "Chelybinsk", Country = "United States", PostalCode = "123456", State = "Texas" } },
                 Email = "qwer2@gmail.com",
                 PhoneNumber = "+71234567892",
-                Note = new List<string>() { "Hello2", "World2" },
+                Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello" }, new Note() { CustomerId = 2, Text = "World" } },
                 Money = (decimal)100.67
             });
         }

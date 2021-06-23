@@ -43,8 +43,7 @@
 
         <% } %>
     </table>
-    <div class="row">
-        <div>
+    <div>
         <% if(pageNum != 1)
            {
                 %><a class="btn btn-primary" href="AddressesList?page=<%= pageNum - 1 %>&customerId=<%= customerId %>">Back</a><%

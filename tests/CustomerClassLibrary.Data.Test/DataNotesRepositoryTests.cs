@@ -10,11 +10,7 @@ namespace CustomerClassLibrary.Data.Test
         public void TestCreate()
         {
             var notesRepository = new NotesRepository();
-            notesRepository.Create(new List<string>()
-            {
-                "Hello",
-                "World"
-            }, 2);
+            notesRepository.Create( new Note() { CustomerId = 2, Text = "Hello" });
         }
 
         [Fact]

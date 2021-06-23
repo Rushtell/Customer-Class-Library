@@ -10,7 +10,7 @@ namespace CustomerClassLibrary.Data
 {
     public class AddressesRepository : BaseRepository
     {
-        public void Create(Address address)
+        public int Create(Address address)
         {
             using (var connection = GetConnection())
             {
@@ -18,7 +18,8 @@ namespace CustomerClassLibrary.Data
 
                 var command = new SqlCommand(
                     "INSERT INTO [Addresses] (CustomerId, AddressLine, AddressLine2, AddressType, City, PostalCode, State, Country) " +
-                    "VALUES( @CustomerId, @AddressLine, @AddressLine2, @AddressType, @City, @PostalCode, @State, @Country)", connection);
+                    "VALUES( @CustomerId, @AddressLine, @AddressLine2, @AddressType, @City, @PostalCode, @State, @Country); " +
+                    "SELECT CAST(scope_identity() AS int)", connection);
 
                 var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
                 {
@@ -69,7 +70,7 @@ namespace CustomerClassLibrary.Data
                 command.Parameters.Add(stateParam);
                 command.Parameters.Add(countryParam);
 
-                command.ExecuteNonQuery();
+                return (int)command.ExecuteScalar();
             }
         }
 
