@@ -31,7 +31,7 @@ namespace CustomerClassLibrary.Data.Test
         public void TestUpdate()
         {
             var notesRepository = new NotesRepository();
-            notesRepository.Update(3, "ByeBye", 5);
+            notesRepository.Update(new Note() { NoteId = 3, CustomerId = 5, Text = "ByeBye" });
         }
 
         [Fact]

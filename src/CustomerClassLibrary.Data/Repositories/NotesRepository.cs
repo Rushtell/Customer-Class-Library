@@ -106,7 +106,7 @@ namespace CustomerClassLibrary.Data
             }
         }
 
-        public void Update(int idNote, string note, int idCustomer)
+        public void Update(Note note)
         {
             using (var connection = GetConnection())
             {
@@ -119,17 +119,17 @@ namespace CustomerClassLibrary.Data
 
                 var noteIdParam = new SqlParameter("@NoteId", SqlDbType.Int)
                 {
-                    Value = idNote
+                    Value = note.NoteId
                 };
 
                 var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
                 {
-                    Value = idCustomer
+                    Value = note.CustomerId
                 };
 
                 var noteParam = new SqlParameter("@Note", SqlDbType.Text)
                 {
-                    Value = note
+                    Value = note.Text
                 };
 
                 command.Parameters.Add(noteIdParam);

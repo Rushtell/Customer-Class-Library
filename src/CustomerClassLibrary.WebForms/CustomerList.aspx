@@ -31,7 +31,7 @@
                     <%= customer.PhoneNumber %>
                 </td>
                 <td>
-                    <a>Notes</a>
+                    <a href="NotesList?page=1&customerId=<%= customer.CustomerId %>">Notes</a>
                 </td>
                 <td>
                     <a href="CustomerEdit?customerId=<%= customer.CustomerId %>" class="btn btn-primary">Change</a>

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <br />
-    <a class="btn btn-primary" href="AddressesEdit?customerId=<%= customerId %>">Add</a>
+    <a class="btn btn-primary" href="NotesEdit?customerId=<%= customerId %>">Add</a>
     <br />
     <br />
     <table class="table">

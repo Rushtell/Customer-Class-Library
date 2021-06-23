@@ -12,7 +12,7 @@ namespace CustomerClassLibrary.WebForms
     {
         DataCustomerAssembler dataCustomerAssembler { get; set; }
 
-        string customerIdReq { get; set; }
+        public string customerIdReq { get; set; }
 
         public CustomerEdit()
         {
@@ -50,21 +50,52 @@ namespace CustomerClassLibrary.WebForms
                 customerIdReq = Request.QueryString["customerId"];
             }
 
-            var customer = new Customer()
-            {
-                FirstName = firstName?.Text,
-                LastName = lastName?.Text,
-                PhoneNumber = phoneNumber?.Text,
-                Email = email?.Text,
-                Money = Convert.ToDecimal(money?.Text)
-            };
+            
 
             if (customerIdReq != null)
             {
+                var customer = new Customer()
+                {
+                    FirstName = firstName?.Text,
+                    LastName = lastName?.Text,
+                    PhoneNumber = phoneNumber?.Text,
+                    Email = email?.Text,
+                    Money = Convert.ToDecimal(money?.Text)
+                };
+
                 customer.CustomerId = Convert.ToInt32(customerIdReq);
                 dataCustomerAssembler.UpdateCustomer(customer);
             }
-            else dataCustomerAssembler.CreateCustomer(customer);
+            else 
+            {
+                var customer = new Customer()
+                {
+                    FirstName = firstName?.Text,
+                    LastName = lastName?.Text,
+                    PhoneNumber = phoneNumber?.Text,
+                    Email = email?.Text,
+                    Money = Convert.ToDecimal(money?.Text),
+                    Address = new List<Address>() {
+                    new Address() {
+                        CustomerId = Convert.ToInt32(customerIdReq),
+                        AddressLine = addressLine?.Text,
+                        SecondAddressLine = secondAddressLine?.Text,
+                        PostalCode = postalCode?.Text,
+                        City = city?.Text,
+                        State = state?.Text,
+                        Country = country?.Text
+                    }
+                },
+                    Note = new List<Note>() {
+                    new Note() {
+                        CustomerId = Convert.ToInt32(customerIdReq),
+                        Text = noteText?.Text
+                    }
+                }
+                };
+
+                dataCustomerAssembler.CreateCustomer(customer);
+            }
 
             Response?.Redirect("CustomerList");
         }
