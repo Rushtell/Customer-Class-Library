@@ -1,5 +1,6 @@
 ﻿using CustomerClassLibrary.Data;
 using CustomerClassLibrary.DataAssembler;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace CustomerClassLibrary.WebForms
     {
         AddressesRepository addressesRepository { get; set; }
 
-        string customerIdReq { get; set; }
+        public string customerIdReq { get; set; }
 
-        string addressIdReq { get; set; }
+        public string addressIdReq { get; set; }
+
+        public string errorReq { get; set; }
 
         public AddressesEdit()
         {
@@ -29,6 +32,7 @@ namespace CustomerClassLibrary.WebForms
             if (!IsPostBack)
             {
                 addressIdReq = Request.QueryString["addressId"];
+                errorReq = Request.QueryString["error"];
 
                 LoadAddress(addressIdReq);
             }
@@ -75,6 +79,20 @@ namespace CustomerClassLibrary.WebForms
 
             if (addressType.Text == "Billing") address.AddressType = AddressType.Billing;
             else if (addressType.Text == "Shipping") address.AddressType = AddressType.Shipping;
+            else address.AddressType = default;
+
+            AddressValidator validator = new AddressValidator();
+            ValidationResult result = validator.Validate(address);
+
+            if (result.ToString() != "")
+            {
+                if (addressIdReq != null)
+                {
+                    Response?.Redirect($"AddressesEdit?error=1&addressId={addressIdReq}&customerId={customerIdReq}");
+                }
+                else Response?.Redirect($"AddressesEdit?error=1&customerId={customerIdReq}");
+
+            }
 
             if (addressIdReq != null)
             {

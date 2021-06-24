@@ -1,4 +1,5 @@
 ﻿using CustomerClassLibrary.DataAssembler;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace CustomerClassLibrary.WebForms
 
         public string customerIdReq { get; set; }
 
+        public string errorReq { get; set; }
+
         public CustomerEdit()
         {
             dataCustomerAssembler = new DataCustomerAssembler();
@@ -24,6 +27,7 @@ namespace CustomerClassLibrary.WebForms
             if (!IsPostBack)
             {
                 customerIdReq = Request.QueryString["customerId"];
+                errorReq = Request.QueryString["error"];
 
                 LoadCustomer(customerIdReq);
             }
@@ -54,47 +58,82 @@ namespace CustomerClassLibrary.WebForms
 
             if (customerIdReq != null)
             {
-                var customer = new Customer()
+                try
                 {
-                    FirstName = firstName?.Text,
-                    LastName = lastName?.Text,
-                    PhoneNumber = phoneNumber?.Text,
-                    Email = email?.Text,
-                    Money = Convert.ToDecimal(money?.Text)
-                };
+                    var customer = new Customer()
+                    {
+                        FirstName = firstName?.Text,
+                        LastName = lastName?.Text,
+                        PhoneNumber = phoneNumber?.Text,
+                        Email = email?.Text,
+                        Money = Convert.ToDecimal(money?.Text)
+                    };
 
-                customer.CustomerId = Convert.ToInt32(customerIdReq);
-                dataCustomerAssembler.UpdateCustomer(customer);
+                    var buildedCustomer = dataCustomerAssembler.BuildCustomer(Convert.ToInt32(customerIdReq));
+                    customer.Address = buildedCustomer.Address;
+                    customer.Note = buildedCustomer.Note;
+
+                    CustomerValidator validator = new CustomerValidator();
+                    ValidationResult result = validator.Validate(customer);
+
+                    if (result.ToString() != "")
+                    {
+                        Response?.Redirect("CustomerEdit?error=1");
+                    }
+
+                    customer.CustomerId = Convert.ToInt32(customerIdReq);
+                    dataCustomerAssembler.UpdateCustomer(customer);
+                }
+                catch (Exception)
+                {
+                    Response?.Redirect($"CustomerEdit?error=1&customerId={customerIdReq}");
+                }
             }
             else 
             {
-                var customer = new Customer()
+                try
                 {
-                    FirstName = firstName?.Text,
-                    LastName = lastName?.Text,
-                    PhoneNumber = phoneNumber?.Text,
-                    Email = email?.Text,
-                    Money = Convert.ToDecimal(money?.Text),
-                    Address = new List<Address>() {
-                    new Address() {
-                        CustomerId = Convert.ToInt32(customerIdReq),
-                        AddressLine = addressLine?.Text,
-                        SecondAddressLine = secondAddressLine?.Text,
-                        PostalCode = postalCode?.Text,
-                        City = city?.Text,
-                        State = state?.Text,
-                        Country = country?.Text
-                    }
-                },
-                    Note = new List<Note>() {
-                    new Note() {
-                        CustomerId = Convert.ToInt32(customerIdReq),
-                        Text = noteText?.Text
-                    }
-                }
-                };
+                    var customer = new Customer()
+                    {
+                        FirstName = firstName?.Text,
+                        LastName = lastName?.Text,
+                        PhoneNumber = phoneNumber?.Text,
+                        Email = email?.Text,
+                        Money = Convert.ToDecimal(money?.Text),
+                        Address = new List<Address>() {
+                        new Address() {
+                            CustomerId = Convert.ToInt32(customerIdReq),
+                            AddressLine = addressLine?.Text,
+                            SecondAddressLine = secondAddressLine?.Text,
+                            PostalCode = postalCode?.Text,
+                            City = city?.Text,
+                            State = state?.Text,
+                            Country = country?.Text
+                            }
+                    },
+                        Note = new List<Note>() {
+                        new Note() {
+                            CustomerId = Convert.ToInt32(customerIdReq),
+                            Text = noteText?.Text
+                            }
+                        }
+                    };
 
-                dataCustomerAssembler.CreateCustomer(customer);
+                    CustomerValidator validator = new CustomerValidator();
+                    ValidationResult result = validator.Validate(customer);
+
+                    if (result.ToString() != "")
+                    {
+                        Response?.Redirect("CustomerEdit?error=1");
+                    }
+
+
+                    dataCustomerAssembler.CreateCustomer(customer);
+                }
+                catch (Exception)
+                {
+                    Response?.Redirect("CustomerEdit?error=1");
+                }
             }
 
             Response?.Redirect("CustomerList");

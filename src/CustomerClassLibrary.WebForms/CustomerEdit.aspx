@@ -1,5 +1,20 @@
 ﻿<%@ Page Title="CustomerEdit" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerEdit.aspx.cs" Inherits="CustomerClassLibrary.WebForms.CustomerEdit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <%
+        if(errorReq != null)
+        {
+            if (customerIdReq != null)
+            {%>
+                    <h3 class="text-danger">Error to change customer, wrong data</h3>
+                <%}
+                    else
+                    {%>
+                    <h3 class="text-danger">Error to create customer, wrong data</h3>
+                <%}
+                    }
+    %>
+
     <div class="form-group">
         <asp:Label runat="server" Text="First Name"></asp:Label>
         <asp:TextBox ID="firstName" CssClass="form-control" runat="server"></asp:TextBox>
