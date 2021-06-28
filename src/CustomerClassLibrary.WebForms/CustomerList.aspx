@@ -34,7 +34,7 @@
                     <a href="NotesList?page=1&customerId=<%= customer.CustomerId %>">Notes</a>
                 </td>
                 <td>
-                    <a href="CustomerEdit?customerId=<%= customer.CustomerId %>" class="btn btn-primary">Change</a>
+                    <a href="CustomerEdit?customerId=<%= customer.CustomerId %>" class="btn btn-primary">Edit</a>
                 </td>
                 <td>
                     <a href="CustomerList?customerId=<%= customer.CustomerId %>&page=<%= pageNum %>" class="btn btn-danger">Delete</a>
@@ -43,8 +43,7 @@
 
         <% } %>
     </table>
-    <div class="row">
-        <div>
+    <div>
         <% if(pageNum != 1)
            {
                 %><a class="btn btn-primary" href="CustomerList?page=<%= pageNum - 1 %>">Back</a><%

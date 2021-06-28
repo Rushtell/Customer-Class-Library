@@ -75,16 +75,26 @@ namespace CustomerClassLibrary.WebForms
 
                     CustomerValidator validator = new CustomerValidator();
                     ValidationResult result = validator.Validate(customer);
-
-                    if (result.ToString() != "")
+                    
+                    if (RegularExpressionValidatorFirstName.IsValid == true &&
+                        RegularExpressionValidatorLastName.IsValid == true &&
+                        RegularExpressionValidatorPhone.IsValid == true &&
+                        RegularExpressionValidatorEmail.IsValid == true &&
+                        RegularExpressionValidatorMoney.IsValid == true)
                     {
-                        Response?.Redirect("CustomerEdit?error=1");
+                        if (result.ToString() != "")
+                        {
+                            Response?.Redirect($"CustomerEdit?error=1&customerId={customerIdReq}");
+                        }
+
+                        customer.CustomerId = Convert.ToInt32(customerIdReq);
+                        dataCustomerAssembler.UpdateCustomer(customer);
+
+                        Response?.Redirect("CustomerList");
                     }
 
-                    customer.CustomerId = Convert.ToInt32(customerIdReq);
-                    dataCustomerAssembler.UpdateCustomer(customer);
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
                     Response?.Redirect($"CustomerEdit?error=1&customerId={customerIdReq}");
                 }
@@ -93,6 +103,10 @@ namespace CustomerClassLibrary.WebForms
             {
                 try
                 {
+                    AddressType concretAddressType;
+                    if (addressType.SelectedIndex == 0) concretAddressType = AddressType.Billing;
+                    else if (addressType.SelectedIndex == 1) concretAddressType = AddressType.Shipping;
+                    else concretAddressType = default;
                     var customer = new Customer()
                     {
                         FirstName = firstName?.Text,
@@ -106,6 +120,7 @@ namespace CustomerClassLibrary.WebForms
                             AddressLine = addressLine?.Text,
                             SecondAddressLine = secondAddressLine?.Text,
                             PostalCode = postalCode?.Text,
+                            AddressType = concretAddressType,
                             City = city?.Text,
                             State = state?.Text,
                             Country = country?.Text
@@ -122,21 +137,23 @@ namespace CustomerClassLibrary.WebForms
                     CustomerValidator validator = new CustomerValidator();
                     ValidationResult result = validator.Validate(customer);
 
-                    if (result.ToString() != "")
+                    if (Page.IsValid)
                     {
-                        Response?.Redirect("CustomerEdit?error=1");
+                        if (result.ToString() != "")
+                        {
+                            Response?.Redirect("CustomerEdit?error=1");
+                        }
+
+                        dataCustomerAssembler.CreateCustomer(customer);
+
+                        Response?.Redirect("CustomerList");
                     }
-
-
-                    dataCustomerAssembler.CreateCustomer(customer);
                 }
-                catch (Exception)
+                catch (FormatException)
                 {
                     Response?.Redirect("CustomerEdit?error=1");
                 }
             }
-
-            Response?.Redirect("CustomerList");
         }
     }
 }

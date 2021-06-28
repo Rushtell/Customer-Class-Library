@@ -2,7 +2,7 @@ name: Start Tests
 on:
   push:
     branches:
-      - ADO.NET
+      - ASP.NET.WebForms
 jobs:
   build:
 

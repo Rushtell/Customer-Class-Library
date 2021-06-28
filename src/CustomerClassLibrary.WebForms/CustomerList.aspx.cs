@@ -37,16 +37,19 @@ namespace CustomerClassLibrary.WebForms
             {
                 dataAssembler.DeleteCustomer(Convert.ToInt32(customerIdReq));
             }
-            var allListCustomers = dataAssembler.GetAll();
-            customersCount = allListCustomers.Count;
-            for (int i = 0; i < 15; i++)
-            {
-                int num = i + ((Convert.ToInt32(pageNum) - 1) * 15);
-                if (num < customersCount)
-                {
-                    listCustomers.Add(allListCustomers[num]);
-                }
-            }
+            customersCount = dataAssembler.Count(); 
+            int numCustomers = Convert.ToInt32(pageNum) * 15;
+            listCustomers = dataAssembler.GetSelection(numCustomers - 15, numCustomers);
+            //var allListCustomers = dataAssembler.GetAll();
+            //customersCount = allListCustomers.Count;
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    int num = i + ((Convert.ToInt32(pageNum) - 1) * 15);
+            //    if (num < customersCount)
+            //    {
+            //        listCustomers.Add(allListCustomers[num]);
+            //    }
+            //}
         }
     }
 }

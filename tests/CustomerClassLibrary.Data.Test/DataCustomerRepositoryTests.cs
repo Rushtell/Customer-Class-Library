@@ -52,5 +52,30 @@ namespace CustomerClassLibrary.Data.Test
             var customerRepository = new CustomerRepository();
             customerRepository.Delete(1);
         }
+
+        [Fact]
+        public void TestGetFirst15Customers()
+        {
+            var customerRepository = new CustomerRepository();
+            var customers = customerRepository.ReadSelect(0, 15);
+
+            Assert.True(customers.Count > 0);
+        }
+
+        [Fact]
+        public void TestCount()
+        {
+            var customerRepository = new CustomerRepository();
+            var count = customerRepository.Count();
+            Assert.True(count > 0);
+        }
+
+        [Fact]
+        public void TestReadAll()
+        {
+            var customerRepository = new CustomerRepository();
+            var count = customerRepository.ReadAll().Count;
+            Assert.True(count > 0);
+        }
     }
 }

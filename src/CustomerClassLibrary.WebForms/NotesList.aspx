@@ -16,7 +16,7 @@
                     <%= note.Text %>
                 </td>
                 <td>
-                    <a href="NotesEdit?noteId=<%= note.NoteId %>&customerId=<%= customerId %>" class="btn btn-primary">Change</a>
+                    <a href="NotesEdit?noteId=<%= note.NoteId %>&customerId=<%= customerId %>" class="btn btn-primary">Edit</a>
                 </td>
                 <td>
                     <a href="NotesList?page=<%= pageNum %>&customerId=<%= customerId %>&noteId=<%= note.NoteId %>" class="btn btn-danger">Delete</a>

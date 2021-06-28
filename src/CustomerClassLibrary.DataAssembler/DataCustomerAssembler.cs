@@ -61,7 +61,7 @@ namespace CustomerClassLibrary.DataAssembler
             customerRepository.Update(customer);
         }
 
-        public List<Customer> GetAll()
+        public virtual List<Customer> GetAll()
         {
             List<Customer> listCustomer = new List<Customer>();
             var customerRepository = new CustomerRepository();
@@ -77,6 +77,31 @@ namespace CustomerClassLibrary.DataAssembler
                 customer.Note = notes;
             }
             return listCustomer;
+        }
+
+        public virtual List<Customer> GetSelection(int numFrom, int numTo)
+        {
+            List<Customer> listCustomer = new List<Customer>();
+            var customerRepository = new CustomerRepository();
+            var addressesRepository = new AddressesRepository();
+            var notesRepository = new NotesRepository();
+
+            listCustomer = customerRepository.ReadSelect(numFrom, numTo);
+            foreach (var customer in listCustomer)
+            {
+                var addressList = addressesRepository.ReadCustomerAddresses(customer.CustomerId);
+                var notes = notesRepository.ReadCustomerNotes(customer.CustomerId);
+                customer.Address = addressList;
+                customer.Note = notes;
+            }
+            return listCustomer;
+        }
+
+        public virtual int Count()
+        {
+            var customerRepository = new CustomerRepository();
+
+            return customerRepository.Count();
         }
     }
 }

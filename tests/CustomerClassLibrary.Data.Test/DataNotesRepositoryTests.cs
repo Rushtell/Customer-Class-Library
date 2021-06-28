@@ -40,5 +40,12 @@ namespace CustomerClassLibrary.Data.Test
             var notesRepository = new NotesRepository();
             notesRepository.Delete(6);
         }
+
+        [Fact]
+        public void TestDeleteByCustomer()
+        {
+            var notesRepository = new NotesRepository();
+            notesRepository.DeleteAllByCustomerId(1);
+        }
     }
 }

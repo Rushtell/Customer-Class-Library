@@ -19,4 +19,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CustomerClassLibrary.DataAssembler\CustomerClassLibrary.DataAssembler.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary.Data\CustomerClassLibrary.Data.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary.WebForms\CustomerClassLibrary.WebForms.csproj" />
+    <ProjectReference Include="..\..\src\CustomerClassLibrary\CustomerClassLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

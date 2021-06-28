@@ -44,11 +44,12 @@ namespace CustomerClassLibrary.WebForms
             {
                 var address = addressesRepository.Read(Convert.ToInt32(addressIdReq));
 
+                
                 if (address.AddressType == AddressType.Billing)
                 {
-                    addressType.Text = "Billing";
+                    addressType.SelectedIndex = 0;
                 }
-                else addressType.Text = "Shipping";
+                else addressType.SelectedIndex = 1;
 
                 addressLine.Text = address.AddressLine;
                 secondAddressLine.Text = address.SecondAddressLine;
@@ -77,31 +78,34 @@ namespace CustomerClassLibrary.WebForms
                 Country = country?.Text
             };
 
-            if (addressType.Text == "Billing") address.AddressType = AddressType.Billing;
-            else if (addressType.Text == "Shipping") address.AddressType = AddressType.Shipping;
+            if (addressType.SelectedIndex == 0) address.AddressType = AddressType.Billing;
+            else if (addressType.SelectedIndex == 1) address.AddressType = AddressType.Shipping;
             else address.AddressType = default;
 
             AddressValidator validator = new AddressValidator();
             ValidationResult result = validator.Validate(address);
 
-            if (result.ToString() != "")
+            if (Page.IsValid)
             {
+                if (result.ToString() != "")
+                {
+                    if (addressIdReq != null)
+                    {
+                        Response?.Redirect($"AddressesEdit?error=1&addressId={addressIdReq}&customerId={customerIdReq}");
+                    }
+                    else Response?.Redirect($"AddressesEdit?error=1&customerId={customerIdReq}");
+
+                }
+
                 if (addressIdReq != null)
                 {
-                    Response?.Redirect($"AddressesEdit?error=1&addressId={addressIdReq}&customerId={customerIdReq}");
+                    address.AddressId = Convert.ToInt32(addressIdReq);
+                    addressesRepository.Update(address);
                 }
-                else Response?.Redirect($"AddressesEdit?error=1&customerId={customerIdReq}");
+                else addressesRepository.Create(address);
 
+                Response?.Redirect($"AddressesList?customerId={customerIdReq}");
             }
-
-            if (addressIdReq != null)
-            {
-                address.AddressId = Convert.ToInt32(addressIdReq);
-                addressesRepository.Update(address);
-            }
-            else addressesRepository.Create(address);
-
-            Response?.Redirect($"AddressesList?customerId={customerIdReq}");
         }
     }
 }

@@ -34,7 +34,7 @@
                     <%= address.Country %>
                 </td>
                 <td>
-                    <a href="AddressesEdit?addressId=<%= address.AddressId %>&customerId=<%= customerId %>" class="btn btn-primary">Change</a>
+                    <a href="AddressesEdit?addressId=<%= address.AddressId %>&customerId=<%= customerId %>" class="btn btn-primary">Edit</a>
                 </td>
                 <td>
                     <a href="AddressesList?page=<%= pageNum %>&customerId=<%= customerId %>&addressId=<%= address.AddressId %>" class="btn btn-danger">Delete</a>

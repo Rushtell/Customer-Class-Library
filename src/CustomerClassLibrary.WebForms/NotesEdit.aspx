@@ -6,6 +6,12 @@
         <asp:TextBox ID="noteText" CssClass="form-control" runat="server"></asp:TextBox>
     </div>
 
+    <asp:RequiredFieldValidator id="RequiredFieldValidatorNoteText"
+                ControlToValidate="noteText"
+                Display="Static"
+                ErrorMessage="NoteText is incorrect"
+                runat="server"/>
+
     <asp:Button runat="server" CssClass="btn btn-primary" 
                 OnClick="OnSaveClick" 
                 Text="Save" />

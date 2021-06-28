@@ -118,6 +118,42 @@ namespace CustomerClassLibrary.Data
             }
         }
 
+        public List<Customer> ReadSelect(int numFrom, int numTo)
+        {
+            List<Customer> listCustomers = new List<Customer>();
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    $"SELECT  * " +
+                    $"FROM(SELECT    ROW_NUMBER() OVER(ORDER BY CustomerId) AS RowNum, * " +
+                    $"FROM[Customers] " +
+                    $"WHERE     CustomerId >= 0 " +
+                    $") AS RowConstrainedResult " +
+                    $"WHERE   RowNum > {numFrom} " +
+                    $"AND RowNum <= {numTo} " +
+                    $"ORDER BY RowNum", connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listCustomers.Add(new Customer()
+                        {
+                            CustomerId = (int)reader["CustomerId"],
+                            FirstName = reader["FirstName"]?.ToString(),
+                            LastName = reader["LastName"]?.ToString(),
+                            PhoneNumber = reader["PhoneNumber"]?.ToString(),
+                            Email = reader["Email"]?.ToString(),
+                            Money = (decimal)reader["TotalPurchasesAmount"]
+                        });
+                    }
+                    return listCustomers;
+                }
+            }
+        }
+
         public void Update(Customer customer)
         {
             using (var connection = GetConnection())
@@ -190,5 +226,27 @@ namespace CustomerClassLibrary.Data
                 command.ExecuteNonQuery();
             }
         }
+
+        public int Count()
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                var command = new SqlCommand(
+                    "SELECT COUNT(*) FROM Customers", connection);
+
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return (int)reader[0];
+                    }
+                    return -1;
+                }
+            }
+        }
+
     }
 }

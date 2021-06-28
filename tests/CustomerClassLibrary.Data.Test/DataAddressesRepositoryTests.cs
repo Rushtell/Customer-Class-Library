@@ -61,5 +61,12 @@ namespace CustomerClassLibrary.Data.Test
             var addressesRepository = new AddressesRepository();
             addressesRepository.Delete(1);
         }
+
+        [Fact]
+        public void TestDeleteByCustomer()
+        {
+            var addressesRepository = new AddressesRepository();
+            addressesRepository.DeleteAllByCustomerId(1);
+        }
     }
 }
