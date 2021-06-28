@@ -6,7 +6,7 @@ namespace CustomerClassLibrary.DataAssembler
 {
     public class DataCustomerAssembler
     {
-        public Customer BuildCustomer (int id)
+        public virtual Customer BuildCustomer (int id)
         {
             var customerRepository = new CustomerRepository();
             var addressesRepository = new AddressesRepository();
@@ -20,7 +20,7 @@ namespace CustomerClassLibrary.DataAssembler
             return customer;
         }
 
-        public Customer CreateCustomer(Customer customer)
+        public virtual Customer CreateCustomer(Customer customer)
         {
             var customerRepository = new CustomerRepository();
             var customerId = customerRepository.Create(customer);
@@ -44,21 +44,39 @@ namespace CustomerClassLibrary.DataAssembler
             return customer;
         }
 
-        public void DeleteCustomer(int id)
+        public virtual bool DeleteCustomer(int id)
         {
-            var customerRepository = new CustomerRepository();
-            var addressesRepository = new AddressesRepository();
-            var notesRepository = new NotesRepository();
+            try
+            {
+                var customerRepository = new CustomerRepository();
+                var addressesRepository = new AddressesRepository();
+                var notesRepository = new NotesRepository();
 
-            addressesRepository.DeleteAllByCustomerId(id);
-            notesRepository.DeleteAllByCustomerId(id);
-            customerRepository.Delete(id);
+                addressesRepository.DeleteAllByCustomerId(id);
+                notesRepository.DeleteAllByCustomerId(id);
+                customerRepository.Delete(id);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public void UpdateCustomer(Customer customer)
+        public virtual bool UpdateCustomer(Customer customer)
         {
-            var customerRepository = new CustomerRepository();
-            customerRepository.Update(customer);
+            try
+            {
+                var customerRepository = new CustomerRepository();
+                customerRepository.Update(customer);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public virtual List<Customer> GetAll()

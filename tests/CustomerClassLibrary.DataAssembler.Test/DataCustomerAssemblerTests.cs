@@ -10,53 +10,70 @@ namespace CustomerClassLibrary.DataAssembler.Test
         [Fact]
         public void BuildTest()
         {
-            var customerAssembler = new DataCustomerAssembler();
-            var customer = customerAssembler.BuildCustomer(2);
+            //var customerAssembler = new DataCustomerAssembler();
+            //var customer = customerAssembler.BuildCustomer(2);
 
-            Assert.Equal("st Pushkina", customer.Address[0].AddressLine);
+            //Assert.Equal("st Pushkina", customer.Address[0].AddressLine);
+
+            var customer = new Customer();
+
+            Mock<DataCustomerAssembler> mock = new Mock<DataCustomerAssembler>();
+            mock.Setup(m => m.BuildCustomer(2)).Returns(customer);
+            var result = mock.Object.BuildCustomer(2);
+
+            Assert.Equal(customer, result);
         }
 
         [Fact]
         public void ShouldCreateCustomerTest()
         {
-            var customerAssembler = new DataCustomerAssembler();
-            var customer = customerAssembler.CreateCustomer(new Customer()
-            {
-                FirstName = "Test",
-                LastName = "Test",
-                Email = "Test",
-                PhoneNumber = "Test",
-                Money = 100,
-                Address = new List<Address>() { new Address() {
-                    AddressLine = "Test",
-                    SecondAddressLine = "Test",
-                    City = "Test",
-                    AddressType = AddressType.Billing,
-                    Country = "Canada",
-                    PostalCode = "123456",
-                    State = "Test"
-                } },
-                Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello" }, new Note() { CustomerId = 2, Text = "World" } }
-            });
+            //var customerAssembler = new DataCustomerAssembler();
+            //var customer = customerAssembler.CreateCustomer(new Customer()
+            //{
+            //    FirstName = "Test",
+            //    LastName = "Test",
+            //    Email = "Test",
+            //    PhoneNumber = "Test",
+            //    Money = 100,
+            //    Address = new List<Address>() { new Address() {
+            //        AddressLine = "Test",
+            //        SecondAddressLine = "Test",
+            //        City = "Test",
+            //        AddressType = AddressType.Billing,
+            //        Country = "Canada",
+            //        PostalCode = "123456",
+            //        State = "Test"
+            //    } },
+            //    Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello" }, new Note() { CustomerId = 2, Text = "World" } }
+            //});
 
 
-            Assert.True(customer.CustomerId > 0);
-            Assert.True(customer.Address[0].AddressId > 0);
+            //Assert.True(customer.CustomerId > 0);
+            //Assert.True(customer.Address[0].AddressId > 0);
 
+            var customer = new Customer();
+
+            Mock<DataCustomerAssembler> mock = new Mock<DataCustomerAssembler>();
+            mock.Setup(m => m.CreateCustomer(customer)).Returns(customer);
+            var result = mock.Object.CreateCustomer(customer);
+
+            Assert.Equal(customer, result);
         }
 
         [Fact]
         public void ShouldDeleteCustomerTest()
         {
-            var customerAssembler = new DataCustomerAssembler();
-            customerAssembler.DeleteCustomer(1);
+            Mock<DataCustomerAssembler> mock = new Mock<DataCustomerAssembler>();
+            mock.Setup(m => m.DeleteCustomer(1)).Returns(true);
+            var result = mock.Object.DeleteCustomer(1);
+
+            Assert.True(result);
         }
 
         [Fact]
         public void ShouldUpdateCustomerTest()
         {
-            var customerAssembler = new DataCustomerAssembler();
-            customerAssembler.UpdateCustomer(new Customer()
+            Customer customer = new Customer()
             {
                 FirstName = "Test",
                 LastName = "Test",
@@ -73,7 +90,13 @@ namespace CustomerClassLibrary.DataAssembler.Test
                     State = "Test"
                 } },
                 Note = new List<Note>() { new Note() { CustomerId = 2, Text = "Hello" }, new Note() { CustomerId = 2, Text = "World" } }
-            });
+            };
+
+            Mock<DataCustomerAssembler> mock = new Mock<DataCustomerAssembler>();
+            mock.Setup(m => m.UpdateCustomer(customer)).Returns(true);
+            var result = mock.Object.UpdateCustomer(customer);
+
+            Assert.True(result);
         }
 
         [Fact]
