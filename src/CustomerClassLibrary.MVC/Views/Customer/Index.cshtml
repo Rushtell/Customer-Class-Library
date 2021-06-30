@@ -1,0 +1,78 @@
+﻿@model IEnumerable<CustomerClassLibrary.Customer>
+
+    @{
+        ViewBag.Title = "CustomersList";
+    }
+
+    <h2>CustomersList</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Money)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Money)
+                </td>
+                <td>
+                    <a href="~/Address/Index/@item.CustomerId">Addresses</a>
+                </td>
+                <td>
+                    <a href="~/Note/Index/@item.CustomerId">Notes</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })
+                </td>
+            </tr>
+        }
+
+    </table>
+    @if (ViewBag.page != 1)
+    {
+        <a class="btn btn-primary" href="~/Customer/Index?page=@(ViewBag.page - 1)">Back</a>
+    }
+    @if ((ViewBag.page * 15) < ViewBag.CustomersCount)
+    {
+        <a class="btn btn-primary" href="~/Customer/Index?page=@(ViewBag.page + 1)">Next</a>
+    }
+    
