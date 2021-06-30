@@ -17,7 +17,7 @@ jobs:
     - name: Restore dependencies
       run: nuget restore CustomerClassLibrary.sln
     - name: Build
-      run: msbuild CustomerClassLibrary.sln
+      run: msbuild
     - name: Test
       run: dotnet test ./tests/CustomerClassLibrary.Tests /p:Exclude="[*CustomerClassLibrary.Data]*" /p:ExcludeByFile=**/CustomerClassLibrary.Test/*.cs
     - uses: codecov/codecov-action@v1
