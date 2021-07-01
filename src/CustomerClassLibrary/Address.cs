@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace CustomerClassLibrary
 
         public string AddressLine { get; set; }
 
+        [Column("AddressLine2")]
         public string SecondAddressLine { get; set; }
 
         public AddressType AddressType { get; set; }

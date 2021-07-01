@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace CustomerClassLibrary.Data
 {
-    public class NotesRepository : BaseRepository
+    public class NotesRepository : BaseRepository, IRepository<Note>
     {
         public int Create(Note note)
         {
@@ -106,7 +106,7 @@ namespace CustomerClassLibrary.Data
             }
         }
 
-        public void Update(Note note)
+        public Note Update(Note note)
         {
             using (var connection = GetConnection())
             {
@@ -137,28 +137,38 @@ namespace CustomerClassLibrary.Data
                 command.Parameters.Add(noteParam);
 
                 command.ExecuteNonQuery();
+                return note;
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            using (var connection = GetConnection())
+            try
             {
-                connection.Open();
-
-                var command = new SqlCommand(
-                    "DELETE FROM [Notes]" +
-                    "WHERE NoteId = @NoteId", connection);
-
-                var noteIdParam = new SqlParameter("@NoteId", SqlDbType.Int)
+                using (var connection = GetConnection())
                 {
-                    Value = id
-                };
+                    connection.Open();
 
-                command.Parameters.Add(noteIdParam);
+                    var command = new SqlCommand(
+                        "DELETE FROM [Notes]" +
+                        "WHERE NoteId = @NoteId", connection);
 
-                command.ExecuteNonQuery();
+                    var noteIdParam = new SqlParameter("@NoteId", SqlDbType.Int)
+                    {
+                        Value = id
+                    };
+
+                    command.Parameters.Add(noteIdParam);
+
+                    command.ExecuteNonQuery();
+                }
+                return true;
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
         public void DeleteAllByCustomerId(int id)

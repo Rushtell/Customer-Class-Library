@@ -13,4 +13,8 @@
     <PackageReference Include="FluentValidation" Version="10.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+
 </Project>

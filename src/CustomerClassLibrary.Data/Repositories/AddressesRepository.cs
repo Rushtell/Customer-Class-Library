@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace CustomerClassLibrary.Data
 {
-    public class AddressesRepository : BaseRepository
+    public class AddressesRepository : BaseRepository, IRepository<Address>
     {
         public int Create(Address address)
         {
@@ -161,7 +161,7 @@ namespace CustomerClassLibrary.Data
             }
         }
 
-        public void Update(Address address)
+        public Address Update(Address address)
         {
             using (var connection = GetConnection())
             {
@@ -228,27 +228,38 @@ namespace CustomerClassLibrary.Data
                 command.Parameters.Add(countryParam);
 
                 command.ExecuteNonQuery();
+                return address;
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
-                var command = new SqlCommand(
-                    "DELETE FROM [Addresses]" +
-                    "WHERE AddressId = @AddressId", connection);
-
-                var addressIdParam = new SqlParameter("@AddressId", SqlDbType.Int)
+                try
                 {
-                    Value = id
-                };
+                    connection.Open();
 
-                command.Parameters.Add(addressIdParam);
+                    var command = new SqlCommand(
+                        "DELETE FROM [Addresses]" +
+                        "WHERE AddressId = @AddressId", connection);
 
-                command.ExecuteNonQuery();
+                    var addressIdParam = new SqlParameter("@AddressId", SqlDbType.Int)
+                    {
+                        Value = id
+                    };
+
+                    command.Parameters.Add(addressIdParam);
+
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    return false;
+                }
+                
             }
         }
 

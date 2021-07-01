@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace CustomerClassLibrary.Data
 {
-    public class CustomerRepository : BaseRepository
+    public class CustomerRepository : BaseRepository, IRepository<Customer>
     {
         public int Create(Customer customer)
         {
@@ -154,7 +154,7 @@ namespace CustomerClassLibrary.Data
             }
         }
 
-        public void Update(Customer customer)
+        public Customer Update(Customer customer)
         {
             using (var connection = GetConnection())
             {
@@ -203,27 +203,36 @@ namespace CustomerClassLibrary.Data
                 command.Parameters.Add(customerIdParam);
 
                 command.ExecuteNonQuery();
+                return customer;
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             using (var connection = GetConnection())
             {
-                connection.Open();
-
-                var command = new SqlCommand(
-                    "DELETE FROM [Customers]" +
-                    "WHERE CustomerId = @CustomerId", connection);
-
-                var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                try
                 {
-                    Value = id
-                };
+                    connection.Open();
 
-                command.Parameters.Add(customerIdParam);
+                    var command = new SqlCommand(
+                        "DELETE FROM [Customers]" +
+                        "WHERE CustomerId = @CustomerId", connection);
 
-                command.ExecuteNonQuery();
+                    var customerIdParam = new SqlParameter("@CustomerId", SqlDbType.Int)
+                    {
+                        Value = id
+                    };
+
+                    command.Parameters.Add(customerIdParam);
+
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
         }
 
