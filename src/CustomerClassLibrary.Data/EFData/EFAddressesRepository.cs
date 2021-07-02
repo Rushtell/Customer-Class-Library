@@ -34,7 +34,7 @@ namespace CustomerClassLibrary.Data
             address.CustomerId = entity.CustomerId;
             address.AddressLine = entity.AddressLine;
             address.SecondAddressLine = entity.SecondAddressLine;
-            address.AddressType = entity.AddressType;
+            address.AddressTypeEnum = entity.AddressTypeEnum;
             address.City = entity.City;
             address.PostalCode = entity.PostalCode;
             address.State = entity.State;

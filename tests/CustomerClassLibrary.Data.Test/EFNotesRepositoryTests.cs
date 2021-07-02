@@ -54,7 +54,7 @@ namespace CustomerClassLibrary.Data.Test
 
             var customer = repository.Update(new Note()
             {
-                NoteId = 1,
+                NoteId = 2,
                 CustomerId = 2,
                 Text = "testEF"
             });

@@ -13,7 +13,7 @@ namespace CustomerClassLibrary
         {
             RuleFor(address => address.AddressLine).MaximumLength(100).NotNull();
             RuleFor(address => address.SecondAddressLine).MaximumLength(100).NotNull();
-            RuleFor(address => address.AddressType).IsInEnum();
+            RuleFor(address => address.AddressTypeEnum).IsInEnum();
             RuleFor(address => address.City).MaximumLength(50).NotNull();
             RuleFor(address => address.PostalCode).MaximumLength(6).NotNull();
             RuleFor(address => address.State).MaximumLength(20).NotNull();

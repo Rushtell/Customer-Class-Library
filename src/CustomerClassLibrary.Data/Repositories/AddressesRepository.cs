@@ -38,7 +38,7 @@ namespace CustomerClassLibrary.Data
 
                 var addressTypeParam = new SqlParameter("@AddressType", SqlDbType.NVarChar, 50)
                 {
-                    Value = address.AddressType.ToString()
+                    Value = address.AddressTypeEnum.ToString()
                 };
 
                 var cityParam = new SqlParameter("@City", SqlDbType.NVarChar, 50)
@@ -105,7 +105,7 @@ namespace CustomerClassLibrary.Data
                             CustomerId = (int)reader["CustomerId"],
                             AddressLine = reader["AddressLine"]?.ToString(),
                             SecondAddressLine = reader["AddressLine2"]?.ToString(),
-                            AddressType = type,
+                            AddressTypeEnum = type,
                             City = reader["City"]?.ToString(),
                             PostalCode = reader["PostalCode"]?.ToString(),
                             State = reader["State"]?.ToString(),
@@ -149,7 +149,7 @@ namespace CustomerClassLibrary.Data
                             CustomerId = (int)reader["CustomerId"],
                             AddressLine = reader["AddressLine"]?.ToString(),
                             SecondAddressLine = reader["AddressLine2"]?.ToString(),
-                            AddressType = type,
+                            AddressTypeEnum = type,
                             City = reader["City"]?.ToString(),
                             PostalCode = reader["PostalCode"]?.ToString(),
                             State = reader["State"]?.ToString(),
@@ -194,7 +194,7 @@ namespace CustomerClassLibrary.Data
 
                 var addressTypeParam = new SqlParameter("@AddressType", SqlDbType.NVarChar, 50)
                 {
-                    Value = address.AddressType.ToString()
+                    Value = address.AddressTypeEnum.ToString()
                 };
 
                 var cityParam = new SqlParameter("@City", SqlDbType.NVarChar, 50)

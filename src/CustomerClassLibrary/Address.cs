@@ -24,7 +24,19 @@ namespace CustomerClassLibrary
         [Column("AddressLine2")]
         public string SecondAddressLine { get; set; }
 
-        public AddressType AddressType { get; set; }
+        [NotMapped]
+        public AddressType AddressTypeEnum { get; set; }
+
+        public string AddressType { 
+            get
+            {
+                return AddressTypeEnum.ToString();
+            }
+            set
+            {
+                AddressTypeEnum = (AddressType)Enum.Parse(typeof(AddressType), value, true);
+            } 
+        }
 
         public string City { get; set; }
 

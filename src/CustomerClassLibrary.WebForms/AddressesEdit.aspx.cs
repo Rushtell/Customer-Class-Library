@@ -45,7 +45,7 @@ namespace CustomerClassLibrary.WebForms
                 var address = addressesRepository.Read(Convert.ToInt32(addressIdReq));
 
                 
-                if (address.AddressType == AddressType.Billing)
+                if (address.AddressTypeEnum == AddressType.Billing)
                 {
                     addressType.SelectedIndex = 0;
                 }
@@ -78,9 +78,9 @@ namespace CustomerClassLibrary.WebForms
                 Country = country?.Text
             };
 
-            if (addressType.SelectedIndex == 0) address.AddressType = AddressType.Billing;
-            else if (addressType.SelectedIndex == 1) address.AddressType = AddressType.Shipping;
-            else address.AddressType = default;
+            if (addressType.SelectedIndex == 0) address.AddressTypeEnum = AddressType.Billing;
+            else if (addressType.SelectedIndex == 1) address.AddressTypeEnum = AddressType.Shipping;
+            else address.AddressTypeEnum = default;
 
             AddressValidator validator = new AddressValidator();
             ValidationResult result = validator.Validate(address);

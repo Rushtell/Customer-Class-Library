@@ -17,7 +17,7 @@ namespace CustomerClassLibrary.Test
             {
                 AddressLine = "st. Pushkina",
                 SecondAddressLine = "house Kolotushkina",
-                AddressType = AddressType.Shipping,
+                AddressTypeEnum = AddressType.Shipping,
                 City = "Vakanda",
                 PostalCode = "244433",
                 State = "Texas",
@@ -48,7 +48,7 @@ namespace CustomerClassLibrary.Test
             {
                 AddressLine = "st. Pushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 SecondAddressLine = "house Kolotushkinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                AddressType = AddressType.Shipping,
+                AddressTypeEnum = AddressType.Shipping,
                 City = "Vakandaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 PostalCode = "244433234343",
                 State = "Texassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",

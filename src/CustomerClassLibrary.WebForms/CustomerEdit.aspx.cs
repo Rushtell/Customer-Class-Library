@@ -54,24 +54,11 @@ namespace CustomerClassLibrary.WebForms
                 customerIdReq = Request.QueryString["customerId"];
             }
 
-            
-
             if (customerIdReq != null)
             {
                 try
                 {
-                    var customer = new Customer()
-                    {
-                        FirstName = firstName?.Text,
-                        LastName = lastName?.Text,
-                        PhoneNumber = phoneNumber?.Text,
-                        Email = email?.Text,
-                        Money = Convert.ToDecimal(money?.Text)
-                    };
-
-                    var buildedCustomer = dataCustomerAssembler.BuildCustomer(Convert.ToInt32(customerIdReq));
-                    customer.Address = buildedCustomer.Address;
-                    customer.Note = buildedCustomer.Note;
+                    var customer = BuildCustomerWithoutAddressAndNote();
 
                     CustomerValidator validator = new CustomerValidator();
                     ValidationResult result = validator.Validate(customer);
@@ -103,36 +90,7 @@ namespace CustomerClassLibrary.WebForms
             {
                 try
                 {
-                    AddressType concretAddressType;
-                    if (addressType.SelectedIndex == 0) concretAddressType = AddressType.Billing;
-                    else if (addressType.SelectedIndex == 1) concretAddressType = AddressType.Shipping;
-                    else concretAddressType = default;
-                    var customer = new Customer()
-                    {
-                        FirstName = firstName?.Text,
-                        LastName = lastName?.Text,
-                        PhoneNumber = phoneNumber?.Text,
-                        Email = email?.Text,
-                        Money = Convert.ToDecimal(money?.Text),
-                        Address = new List<Address>() {
-                        new Address() {
-                            CustomerId = Convert.ToInt32(customerIdReq),
-                            AddressLine = addressLine?.Text,
-                            SecondAddressLine = secondAddressLine?.Text,
-                            PostalCode = postalCode?.Text,
-                            AddressType = concretAddressType,
-                            City = city?.Text,
-                            State = state?.Text,
-                            Country = country?.Text
-                            }
-                    },
-                        Note = new List<Note>() {
-                        new Note() {
-                            CustomerId = Convert.ToInt32(customerIdReq),
-                            Text = noteText?.Text
-                            }
-                        }
-                    };
+                    var customer = BuildCustomerWithAddressAndNote();
 
                     CustomerValidator validator = new CustomerValidator();
                     ValidationResult result = validator.Validate(customer);
@@ -154,6 +112,57 @@ namespace CustomerClassLibrary.WebForms
                     Response?.Redirect("CustomerEdit?error=1");
                 }
             }
+        }
+
+        public Customer BuildCustomerWithAddressAndNote()
+        {
+            AddressType concretAddressType;
+            if (addressType.SelectedIndex == 0) concretAddressType = AddressType.Billing;
+            else if (addressType.SelectedIndex == 1) concretAddressType = AddressType.Shipping;
+            else concretAddressType = default;
+            return new Customer()
+            {
+                FirstName = firstName?.Text,
+                LastName = lastName?.Text,
+                PhoneNumber = phoneNumber?.Text,
+                Email = email?.Text,
+                Money = Convert.ToDecimal(money?.Text),
+                Address = new List<Address>() {
+                        new Address() {
+                            CustomerId = Convert.ToInt32(customerIdReq),
+                            AddressLine = addressLine?.Text,
+                            SecondAddressLine = secondAddressLine?.Text,
+                            PostalCode = postalCode?.Text,
+                            AddressTypeEnum = concretAddressType,
+                            City = city?.Text,
+                            State = state?.Text,
+                            Country = country?.Text
+                            }
+                    },
+                Note = new List<Note>() {
+                        new Note() {
+                            CustomerId = Convert.ToInt32(customerIdReq),
+                            Text = noteText?.Text
+                            }
+                        }
+            };
+        }
+
+        public Customer BuildCustomerWithoutAddressAndNote()
+        {
+            var customer = new Customer()
+            {
+                FirstName = firstName?.Text,
+                LastName = lastName?.Text,
+                PhoneNumber = phoneNumber?.Text,
+                Email = email?.Text,
+                Money = Convert.ToDecimal(money?.Text)
+            };
+
+            var buildedCustomer = dataCustomerAssembler.BuildCustomer(Convert.ToInt32(customerIdReq));
+            customer.Address = buildedCustomer.Address;
+            customer.Note = buildedCustomer.Note;
+            return customer;
         }
     }
 }

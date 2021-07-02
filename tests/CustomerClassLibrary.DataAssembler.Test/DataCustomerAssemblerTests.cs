@@ -84,7 +84,7 @@ namespace CustomerClassLibrary.DataAssembler.Test
                     AddressLine = "Test",
                     SecondAddressLine = "Test",
                     City = "Test",
-                    AddressType = AddressType.Billing,
+                    AddressTypeEnum = AddressType.Billing,
                     Country = "Canada",
                     PostalCode = "123456",
                     State = "Test"
